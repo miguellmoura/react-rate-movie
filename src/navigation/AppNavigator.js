@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import SearchScreen from "../screens/SearchScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import MyMoviesScreen from "../screens/MyMoviesScreen";
 import { UserContext } from "../contexts/UserContext";
@@ -33,6 +34,11 @@ export default function AppNavigator() {
               name="MyMovies"
               component={MyMoviesScreen}
               options={{ title: "Meus Filmes" }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{ title: "Perfil" }}
             />
           </>
         ) : (
