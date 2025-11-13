@@ -1,4 +1,3 @@
-// src/screens/SearchScreen.js
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -18,7 +17,6 @@ export default function SearchScreen({ navigation }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Faz a busca com um pequeno delay para evitar várias requisições seguidas
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (q.length < 2) {
@@ -26,7 +24,7 @@ export default function SearchScreen({ navigation }) {
         return;
       }
       fetchMovies();
-    }, 500); // 0.5s de delay
+    }, 500);
 
     return () => clearTimeout(delayDebounce);
   }, [q]);
@@ -45,14 +43,15 @@ export default function SearchScreen({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
         <TextInput
           placeholder="Buscar filmes..."
           value={q}
           onChangeText={setQ}
           style={styles.input}
-          accessibilityLabel="Buscar filmes"
+          accessibilityLabel="Campo de busca de filmes"
+          accessibilityHint="Digite o nome de um filme para ver os resultados"
           autoCapitalize="none"
           autoFocus
         />
@@ -68,7 +67,9 @@ export default function SearchScreen({ navigation }) {
             renderItem={({ item }) => (
               <MovieItem
                 movie={item}
-                onPress={() => navigation.navigate("Details", { movieId: item.id })}
+                onPress={() =>
+                  navigation.navigate("Details", { movieId: item.id })
+                }
               />
             )}
             contentContainerStyle={{ padding: 12 }}

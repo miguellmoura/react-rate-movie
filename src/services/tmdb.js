@@ -1,4 +1,3 @@
-// src/services/tmdb.js
 import { TMDB_API_KEY } from "../../config";
 
 const BASE = "https://api.themoviedb.org/3";

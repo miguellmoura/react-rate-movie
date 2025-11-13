@@ -1,4 +1,3 @@
-// AppNavigator.js
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,12 +6,11 @@ import { Ionicons } from "@expo/vector-icons";
 import SearchScreen from "./src/screens/SearchScreen";
 import MyMoviesScreen from "./src/screens/MyMoviesScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
-import DetailsScreen from "./src/screens/DetailsScreen"; // 👈 garante que exista esse arquivo!
+import DetailsScreen from "./src/screens/DetailsScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// 🔹 Stack para a aba de busca (Search + Details)
 function SearchStack() {
   return (
     <Stack.Navigator>

@@ -1,6 +1,12 @@
-// src/screens/AuthScreen.js
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AuthScreen({ navigation, onLogin }) {
@@ -16,7 +22,9 @@ export default function AuthScreen({ navigation, onLogin }) {
     try {
       const raw = await AsyncStorage.getItem("users");
       const users = raw ? JSON.parse(raw) : [];
-      const user = users.find((u) => u.email === email && u.password === password);
+      const user = users.find(
+        (u) => u.email === email && u.password === password
+      );
       if (!user) {
         Alert.alert("Erro", "Usuário ou senha incorretos.");
         return;
@@ -32,7 +40,12 @@ export default function AuthScreen({ navigation, onLogin }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Rate My Movie 🎬</Text>
+      <Text
+        style={styles.title}
+        accessibilityRole="header"
+      >
+        Rate My Movie 🎬
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -41,6 +54,9 @@ export default function AuthScreen({ navigation, onLogin }) {
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
+        accessibilityLabel="Campo de e-mail"
+        accessibilityHint="Digite seu e-mail para entrar"
+        autoFocus
       />
       <TextInput
         style={styles.input}
@@ -48,15 +64,26 @@ export default function AuthScreen({ navigation, onLogin }) {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
+        accessibilityLabel="Campo de senha"
+        accessibilityHint="Digite sua senha para entrar"
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleLogin}
+        accessibilityRole="button"
+        accessibilityLabel="Entrar no Rate My Movie"
+        accessibilityHint="Tenta fazer login com o e-mail e senha informados"
+      >
         <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => navigation.navigate("Register")}
-        style={{ marginTop: 12 }}
+        style={styles.linkButton}
+        accessibilityRole="button"
+        accessibilityLabel="Ir para tela de cadastro"
+        accessibilityHint="Abre a tela para criar uma nova conta"
       >
         <Text style={{ color: "#6C63FF" }}>Criar conta</Text>
       </TouchableOpacity>
@@ -65,9 +92,39 @@ export default function AuthScreen({ navigation, onLogin }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
-  title: { fontSize: 24, fontWeight: "bold", marginBottom: 20, textAlign: "center" },
-  input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 8, padding: 12, marginBottom: 10 },
-  button: { backgroundColor: "#6C63FF", padding: 14, borderRadius: 8, alignItems: "center" },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "#6C63FF",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    minHeight: 44,
+    justifyContent: "center",
+  },
   buttonText: { color: "#fff", fontWeight: "700" },
+  linkButton: {
+    marginTop: 12,
+    minHeight: 44,  
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

@@ -38,7 +38,6 @@ export default function DetailsScreen({ route, navigation }) {
     setRating(value);
     await addMovie(movie, value);
     alert("Filme salvo com sucesso!");
-    // Navega para a aba "Meus Filmes"
     navigation.getParent()?.navigate("Meus Filmes");
   };
 
@@ -47,13 +46,26 @@ export default function DetailsScreen({ route, navigation }) {
       <Image
         source={{ uri: getPoster(movie.poster_path) }}
         style={styles.poster}
+        accessible={true}
+        accessibilityRole="image"
         accessibilityLabel={`Poster do filme ${movie.title}`}
       />
-      <Text style={styles.title}>{movie.title}</Text>
+
+      <Text
+        style={styles.title}
+        accessibilityRole="header"
+      >
+        {movie.title}
+      </Text>
+
       <Text style={styles.overview}>{movie.overview}</Text>
 
       <Text style={styles.label}>Avalie este filme:</Text>
-      <View style={styles.starsContainer}>
+      <View
+        style={styles.starsContainer}
+        accessible={true}
+        accessibilityLabel="Avaliação com estrelas"
+      >
         {[1, 2, 3, 4, 5].map((n) => (
           <Pressable
             key={n}
@@ -66,7 +78,10 @@ export default function DetailsScreen({ route, navigation }) {
               rating >= n && styles.starActive,
               pressed && { opacity: 0.6 },
             ]}
-            accessibilityLabel={`Dar nota ${n} estrelas`}
+            accessibilityRole="button"
+            accessibilityLabel={`Dar nota ${n} estrela${n > 1 ? "s" : ""}`}
+            accessibilityState={{ selected: rating >= n }}
+            accessibilityHint="Toque para definir essa nota para o filme"
           >
             <Text style={{ fontSize: 26 }}>⭐</Text>
           </Pressable>
