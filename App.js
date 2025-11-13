@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import AuthScreen from "./src/screens/AuthScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 import AppNavigator from "./AppNavigator";
+
+import { UserProvider } from "./src/contexts/UserContext";
+import { MoviesProvider } from "./src/contexts/MoviesContext";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,28 +34,28 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!user ? (
-          <>
-            <Stack.Screen name="Login">
+    <UserProvider user={user} logout={handleLogout}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {!user ? (
+            <>
+              <Stack.Screen name="Login">
+                {(props) => <AuthScreen {...props} onLogin={handleLogin} />}
+              </Stack.Screen>
+
+              <Stack.Screen name="Register" component={RegisterScreen} />
+            </>
+          ) : (
+            <Stack.Screen name="Main">
               {(props) => (
-                <AuthScreen {...props} onLogin={handleLogin} />
+                <MoviesProvider user={user}>
+                  <AppNavigator {...props} />
+                </MoviesProvider>
               )}
             </Stack.Screen>
-            <Stack.Screen
-              name="Register"
-              component={RegisterScreen}
-            />
-          </>
-        ) : (
-          <Stack.Screen name="Main">
-            {(props) => (
-              <AppNavigator {...props} user={user} setUser={handleLogout} />
-            )}
-          </Stack.Screen>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

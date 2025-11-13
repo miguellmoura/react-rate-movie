@@ -1,12 +1,14 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+// src/contexts/MoviesContext.js
+import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { UserContext } from "./UserContext";
 
 export const MoviesContext = createContext();
 
-export const MoviesProvider = ({ children }) => {
-  const { user } = useContext(UserContext);
+export const MoviesProvider = ({ children, user }) => {
   const [myMovies, setMyMovies] = useState([]);
+
+  // STORAGE_KEY depende do usuário logado
+  const STORAGE_KEY = user ? `@movies_${user.email}` : null;
 
   useEffect(() => {
     if (user) {
@@ -15,8 +17,6 @@ export const MoviesProvider = ({ children }) => {
       setMyMovies([]);
     }
   }, [user]);
-
-  const STORAGE_KEY = user ? `@movies_${user.email}` : null;
 
   const loadMovies = async () => {
     if (!STORAGE_KEY) return;
