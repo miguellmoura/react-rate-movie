@@ -6,7 +6,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 import SearchScreen from "./src/screens/SearchScreen";
 import MyMoviesScreen from "./src/screens/MyMoviesScreen";
-import ProfileScreen from "./src/screens/ProfileScreen";
 import DetailsScreen from "./src/screens/DetailsScreen"; // 👈 garante que exista esse arquivo!
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +47,6 @@ export default function AppNavigator() {
     >
       <Tab.Screen name="Buscar" component={SearchStack} />
       <Tab.Screen name="Meus Filmes" component={MyMoviesScreen} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
