@@ -3,6 +3,7 @@
     "name": "rate-my-movie",
     "slug": "rate-my-movie",
     "version": "1.0.0",
+    "jsEngine": "jsc",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
